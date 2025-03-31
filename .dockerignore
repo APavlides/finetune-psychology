@@ -1,0 +1,8 @@
+# Ignore these files when building the Docker image
+.git
+.gitignore
+__pycache__
+*.pyc
+*.log
+data/
+models/fine_tuned_model/
