@@ -10,9 +10,7 @@ psychology_model/
 │   └── dataset.py       # Dataset loading and preprocessing
 ├── models/
 │   └── model.py         # Model definition
-├── scripts/
-│   ├── train.py         # Training script
-│   └── evaluate.py      # Evaluation script
+├── fine_tune.py         # Training script
 ├── README.md            # This file
 ├── requirements.txt     # Project dependencies
 ├── Dockerfile           # Docker configuration file
@@ -34,9 +32,9 @@ pip install -r requirements.txt
 ## Quick Start Guide
 
 1.  **Prepare your data:** Modify `data/dataset.py` to load and preprocess your psychology-related text data.
-2.  **Configure training:** Edit `scripts/train.py` to set the model name, training data, and hyperparameters.
-3.  **Run training:** Execute the training script: `python scripts/train.py`.
-4.  **Evaluate your model:** After training, use `scripts/evaluate.py` to assess the model's performance. Modify the script to point to your fine-tuned model.
+2.  **Configure training:** Edit `fine_tune.py` to set the model name, training data, and hyperparameters.
+3.  **Run training:** Execute the training script: `python fine_tune.py`.
+4.  **Evaluate your model:** After training, use a script (e.g., modify `fine_tune.py` or create a new one) to assess the model's performance.
 
 ## Docker Instructions
 
@@ -56,7 +54,7 @@ pip install -r requirements.txt
 
 3.  **Run training inside the container:**
     ```bash
-    python scripts/train.py
+    python fine_tune.py
     ```
 
 ## Note

@@ -1,14 +1,16 @@
 import os
 
 import torch
+from torch.optim import AdamW
 from torch.utils.data import DataLoader
-from transformers import AdamW, AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from data.dataset import PsychologyDataset  # Import your dataset
+from data.dataset import PsychologyDataset
 
 # Define training parameters
-model_name = "mistralai/Mistral-Small-3.1"  # Updated to use Mistral Small 3.1 model
-data_file = "/Users/alexpavlides/Documents/psychology_model/data/richard_summers_physchodynamictherapy.txt"  # Replace with your data file
+model_name = "facebook/opt-125m"
+# Update the file path to use a relative path that will work in the Docker container
+data_file = "data/richard_summers_physchodynamictherapy.txt"
 max_length = 512
 chunk_size = 1024
 batch_size = 2
@@ -17,8 +19,10 @@ learning_rate = 5e-5
 
 # Load tokenizer and model
 tokenizer = AutoTokenizer.from_pretrained(model_name)
-tokenizer.pad_token = tokenizer.eos_token # setting the pad token
-model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32)  # Added torch_dtype check
+# Make sure pad_token is set for the tokenizer
+if tokenizer.pad_token is None:
+    tokenizer.pad_token = tokenizer.eos_token
+model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32)
 model.resize_token_embeddings(len(tokenizer)) # Ensure model embeddings match tokenizer vocab size
 
 # Create dataset and dataloader
